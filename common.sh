@@ -1,7 +1,9 @@
 #!/bin/bash
 # Install prerequisites
+sudo yum -y clean 
 sudo yum -y update
-sudo yum -y install net-tools ntp wget lsof unzip tar iptables-services
+sudo yum -y install net-tools ntp wget lsof unzip tar dos2unix
+#iptables-services
 # Enable NTP
 sudo systemctl enable ntpd && sudo systemctl start ntpd
 # Disable Firewall
