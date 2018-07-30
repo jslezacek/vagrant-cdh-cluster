@@ -26,14 +26,14 @@ Vagrant.configure("2") do |config|
   (1..3).each do |i|
     config.vm.define "dn0#{i}" do |datanode|
         # root be changed for ssh pub key
-        datanode.vm.provision "shell", inline: "echo 'root:$4$demo$kMYQt18/OtSVe9+EeqdJCTy1Q3I$'|chpasswd; sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart"
+        datanode.vm.provision "shell", inline: "echo 'root:cloudera'|chpasswd; sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart"
         datanode.vm.network :private_network, ip: "10.10.10.10#{i}"
         datanode.vm.hostname = "dn0#{i}"
         datanode.ssh.insert_key = false
 
         datanode.vm.provider :virtualbox do |vbox|
             vbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-            vbox.customize ["modifyvm", :id, "--memory", 1024]
+            vbox.customize ["modifyvm", :id, "--memory", 4096]
             vbox.customize ["modifyvm", :id, "--name", "dn0#{i}"]
         end
         # set pwd
