@@ -20,6 +20,7 @@ Vagrant.configure("2") do |config|
       vbox.customize ["modifyvm", :id, "--memory", 8048]
       vbox.customize ["modifyvm", :id, "--name", "mgt01"]
     end
+      mgt01.vm.provision "shell", path: "common.sh"
   end
 
   #== start datanodes loop ==#
@@ -37,6 +38,7 @@ Vagrant.configure("2") do |config|
             vbox.customize ["modifyvm", :id, "--name", "dn0#{i}"]
         end
         # set pwd
+      datanode.vm.provision "shell", path: "common.sh"
     end
   end
   #==end host loop ==$
