@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
   #== host mgt01 ==$
   config.vm.define "mgt01" do |mgt01|
     mgt01.vm.provision "shell", inline: "curl -O https://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin; chmod +x cloudera-manager-installer.bin"
+    mgt01.vm.provision "shell", inline: "echo 'root:cloudera'|chpasswd; sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; service sshd restart"
     mgt01.vm.hostname = "mgt01"
     mgt01.vm.network :private_network, ip: "10.10.10.100"
     mgt01.vm.network "forwarded_port", guest: 7180, host: 7180
